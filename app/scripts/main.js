@@ -22,13 +22,14 @@
         y = d3.scale.linear()
             .range([0, innerHeight]);
 
-    x = d3.time.scale.utc()
-        .rangeRound([0, innerWidth]);
+    x = d3.time.scale()
+        .range([0, innerWidth]);
 
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient('bottom')
-        .ticks(d3.time.second, 10);
+        .ticks(d3.time.second, 15)
+        .tickFormat(d3.time.format.utc('%M:%S'));
 
     var chart,
         innerChart;
@@ -54,10 +55,9 @@
     function downloadSuccessful(data) {
 
         x.domain([
-            d3.min(data, function(d) { return new Date(d.Seconds*1000); }),
-            d3.max(data, function(d) { return new Date(d.Seconds*1000); })
+            Math.ceil(d3.min(data, function(d) { return d.Seconds; })*1000),
+            Math.ceil(d3.max(data, function(d) { return d.Seconds; })*1000)
         ]);
-        console.log(x.domain());
 
         y.domain([
             d3.min(data, function(d) { return d.Place; }),
@@ -66,7 +66,7 @@
 
         var groups = innerChart.selectAll('g').data(data)
             .enter().append('g')
-            .attr('transform', function(d) { return 'translate(' + x(new Date(d.Seconds*1000)) + ', ' + y(d.Place) + ')'; });
+            .attr('transform', function(d) { return 'translate(' + x(d.Seconds*1000) + ', ' + y(d.Place) + ')'; });
 
         groups.append('circle')
             .attr('cx', 0)
