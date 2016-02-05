@@ -79,6 +79,9 @@
             .attr('transform', 'translate(7, 4)')
             .text(function(d) { return d.Name; });
 
+        groups.on('mouseover', displayTooltip)
+            .on('mouseout', hideTooltip);
+
         innerChart.append('g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0, ' + (innerHeight + 10) + ')')
@@ -93,5 +96,15 @@
     function downloadError(jqXHR, textStatus, error) {
         console.error('Error while loading data', jqXHR, textStatus, error);
         $('.chart-wrapper').html('Sorry, there\'s been an error - data cannot be downloaded from the server. Please, try again later.');
+    }
+
+    function displayTooltip(d) {
+        d3.select(this)
+            .classed('highlighted', true);
+    }
+
+    function hideTooltip() {
+        d3.select(this)
+            .classed('highlighted', false);
     }
 })();

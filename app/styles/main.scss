@@ -1,15 +1,38 @@
+$regularCircle: blue;
+$regularCircleHighlighted: #43ceff;
+
+$dopingCircle: red;
+$dopingCircleHighlighted: #ffad5e;
+
 .chart {
   text {
     font-size: 8pt;
   }
 
   circle {
-    stroke: blue;
-    fill: blue;
+    stroke: $regularCircle;
+    fill: $regularCircle;
 
     &.doping {
-      stroke: red;
-      fill: red;
+      stroke: $dopingCircle;
+      fill: $dopingCircle;
+    }
+  }
+
+  .highlighted {
+    circle {
+      stroke: $regularCircleHighlighted;
+      fill: $regularCircleHighlighted;
+
+      &.doping {
+        stroke: $dopingCircleHighlighted;
+        fill: $dopingCircleHighlighted;
+      }
+    }
+
+    // Change text color
+    text {
+      fill: #303e4b;
     }
   }
 }
