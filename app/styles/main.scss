@@ -1,8 +1,8 @@
 $regularCircle: blue;
-$regularCircleHighlighted: #43ceff;
+$regularCircleHighlighted: rgba(73, 70, 255, 1);
 
 $dopingCircle: red;
-$dopingCircleHighlighted: #ffad5e;
+$dopingCircleHighlighted: #ff4c4a;
 
 .chart {
   text {
@@ -33,6 +33,15 @@ $dopingCircleHighlighted: #ffad5e;
     // Change text color
     text {
       fill: #303e4b;
+
+      &.clickable {
+        fill: #96ccff;
+        cursor: pointer;
+      }
     }
   }
+}
+
+.chart-tooltip text {
+  font-size: 12pt;
 }

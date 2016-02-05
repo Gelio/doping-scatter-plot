@@ -5,7 +5,9 @@
     $(document).ready(init);
 
     var width = 900,
-        height = 500;
+        height = 500,
+        tooltipBottomMargin = 50,
+        tooltipTextHeight = 20;
 
     var margin = {
         top: 50,
@@ -33,7 +35,8 @@
             .orient('left');
 
     var chart,
-        innerChart;
+        innerChart,
+        tooltip;
 
     function init() {
         $('.copyrightDate').text(new Date().getFullYear());
@@ -77,10 +80,12 @@
 
         groups.append('text')
             .attr('transform', 'translate(7, 4)')
-            .text(function(d) { return d.Name; });
+            .text(function(d) { return d.Name; })
+            .classed('clickable', function(d) { return d.URL.length > 0;});
 
         groups.on('mouseover', displayTooltip)
-            .on('mouseout', hideTooltip);
+            .on('mouseout', hideTooltip)
+            .on('click', redirectToWiki);
 
         innerChart.append('g')
             .attr('class', 'x axis')
@@ -91,6 +96,34 @@
             .attr('class', 'y axis')
             .attr('transform', 'translate(-10, 0)')
             .call(yAxis);
+
+        tooltip = innerChart.append('g')
+            .attr('class', 'chart-tooltip')
+            .attr('transform', 'translate(' + margin.left + ', ' + (innerHeight - tooltipBottomMargin) + ')');
+
+        // Legend info
+
+        var legend = innerChart.append('g')
+                .attr('transform', 'translate(' + margin.left + ', ' + (innerHeight - tooltipBottomMargin - 100) + ')');
+
+        legend.append('circle')
+            .attr('cx', 0)
+            .attr('cy', 0)
+            .attr('r', 5)
+            .attr('class', 'doping');
+
+        legend.append('text')
+            .attr('transform', 'translate(10, 3)')
+            .text('Accused of doping');
+
+        legend.append('circle')
+            .attr('cx', 0)
+            .attr('cy', tooltipTextHeight)
+            .attr('r', 5);
+
+        legend.append('text')
+            .attr('transform', 'translate(10, ' + (tooltipTextHeight + 3) + ')')
+            .text('Doping free');
     }
 
     function downloadError(jqXHR, textStatus, error) {
@@ -101,10 +134,29 @@
     function displayTooltip(d) {
         d3.select(this)
             .classed('highlighted', true);
+
+        tooltip.append('text')
+            .text(d.Name + ' (' + d.Nationality + ') - ' + d.Time);
+
+        tooltip.append('text')
+            .attr('transform', 'translate(0, ' + tooltipTextHeight + ')')
+            .text('Place: ' + d.Place);
+
+        tooltip.append('text')
+            .attr('transform', 'translate(0, ' + (tooltipTextHeight*2) + ')')
+            .text('Doping: ' + (d.Doping.length > 0 ? d.Doping : 'none'));
     }
 
     function hideTooltip() {
         d3.select(this)
             .classed('highlighted', false);
+
+        tooltip.selectAll('text')
+            .remove();
+    }
+
+    function redirectToWiki(d) {
+        if(d.URL.length > 0)
+            window.location.href = d.URL;
     }
 })();
