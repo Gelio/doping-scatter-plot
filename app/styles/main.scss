@@ -1,0 +1,15 @@
+.chart {
+  text {
+    font-size: 8pt;
+  }
+
+  circle {
+    stroke: blue;
+    fill: blue;
+
+    &.doping {
+      stroke: red;
+      fill: red;
+    }
+  }
+}
