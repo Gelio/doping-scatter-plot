@@ -17,19 +17,20 @@
     var innerWidth = width - margin.left - margin.right,
         innerHeight = height - margin.top - margin.bottom;
 
-    var x = d3.scale.linear()
+    var x = d3.time.scale()
             .range([0, innerWidth]),
         y = d3.scale.linear()
             .range([0, innerHeight]);
 
-    x = d3.time.scale()
-        .range([0, innerWidth]);
 
     var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient('bottom')
-        .ticks(d3.time.second, 15)
-        .tickFormat(d3.time.format.utc('%M:%S'));
+            .scale(x)
+            .orient('bottom')
+            .ticks(d3.time.second, 15)
+            .tickFormat(d3.time.format.utc('%M:%S')),
+        yAxis = d3.svg.axis()
+            .scale(y)
+            .orient('left');
 
     var chart,
         innerChart;
@@ -82,6 +83,11 @@
             .attr('class', 'x axis')
             .attr('transform', 'translate(0, ' + (innerHeight + 10) + ')')
             .call(xAxis);
+
+        innerChart.append('g')
+            .attr('class', 'y axis')
+            .attr('transform', 'translate(-10, 0)')
+            .call(yAxis);
     }
 
     function downloadError(jqXHR, textStatus, error) {
