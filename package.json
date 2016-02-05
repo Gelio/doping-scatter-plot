@@ -1,0 +1,35 @@
+{
+  "name": "doping-scatter-plot",
+  "version": "1.0.0",
+  "description": "A task from FreeCodeCamp to design and develop a scatter plot using D3.js that visualises 35 fastest times up Alpe d'Huez.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server -w --inline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gelio/doping-scatter-plot.git"
+  },
+  "author": "Grzegorz Rozdzialik <voreny.gelio@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gelio/doping-scatter-plot/issues"
+  },
+  "homepage": "https://github.com/Gelio/doping-scatter-plot#readme",
+  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "node-sass": "^3.4.2",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^3.1.2",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.2",
+    "d3": "^3.5.14",
+    "jquery": "^2.2.0"
+  }
+}
